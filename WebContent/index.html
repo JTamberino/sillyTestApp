@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+ <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"> </script>
+</head>
+<body>
+<div  ng-app="testApp" ng-controller="testCTRL as testCTRL">
+This is a test app to have something to put on an EC2.
+
+<form>
+<input ng-model="testCTRL.base">
+<button ng-click="testCTRL.getSSJ(testCTRL.base)">SSJ</button>
+</form>
+<div>{{testCTRL.value}}</div>
+</div>
+
+<script>
+angular
+.module("testApp", [])
+.controller("testCTRL", testController);
+
+function testController($scope, $http){
+	var tc = this;
+	
+	tc.base = 0;
+	tc.value = 0;
+	tc.getSSJ = getSSJ;
+	
+	function getSSJ(base){
+		var url = "/RESTTest2/rest/bp/ssj?base=" + base;
+		$http.get(url).then(function(response){
+			tc.value = response.data;
+			}, function(){
+			});
+	
+	}
+	
+
+}
+
+</script>
+</body>
+</html>
